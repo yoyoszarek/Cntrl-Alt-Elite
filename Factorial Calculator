@@ -7,6 +7,9 @@ output: .asciiz "\nFactorial of the number is: "
 
 .text
 
+.globl main
+main: 
+
 # Prompt user for input
 li $v0, 4
 la $a0, prompt
