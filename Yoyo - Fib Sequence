@@ -1,0 +1,58 @@
+.data
+prompt_fib: .asciiz "Enter the number of Fibonacci terms to generate: "
+result_msg: .asciiz "Fibonacci Sequence: "
+newline: .asciiz "\n"
+
+.text
+.globl main
+
+main:
+    # Print prompt
+    li $v0, 4
+    la $a0, prompt_fib
+    syscall
+
+    # Read user input
+    li $v0, 5
+    syscall
+    move $t0, $v0    # Store input in $t0
+
+    # Calculate Fibonacci sequence using loop
+    li $t1, 0         # Initialize first Fibonacci number to 0
+    li $t2, 1         # Initialize second Fibonacci number to 1
+    li $t3, 2         # Initialize counter to 2 (since we already have first two Fibonacci numbers)
+
+    # Print initial Fibonacci numbers
+    li $v0, 4
+    la $a0, result_msg
+    syscall
+    li $v0, 1
+    move $a0, $t1
+    syscall
+    move $a0, $t2
+    syscall
+
+fib_loop:
+    bge $t3, $t0, fib_done  # If counter >= input, finish generating sequence
+
+    add $t4, $t1, $t2  # Calculate next Fibonacci number
+    move $t1, $t2      # Update first Fibonacci number
+    move $t2, $t4      # Update second Fibonacci number
+    addi $t3, $t3, 1   # Increment counter
+
+    # Print next Fibonacci number
+    li $v0, 1
+    move $a0, $t4
+    syscall
+
+    j fib_loop        # Jump back to loop start
+
+fib_done:
+    # Print newline
+    li $v0, 4
+    la $a0, newline
+    syscall
+
+    # Exit program
+    li $v0, 10
+    syscall
