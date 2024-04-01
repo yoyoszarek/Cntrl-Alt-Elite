@@ -1,0 +1,38 @@
+#Program will prompt user for number and will calculate its factorial
+
+.data
+
+prompt: .asciiz "Enter a positive number"
+output: .asciiz "\nFactorial of the number is: "
+
+.text
+
+# Prompt user for input
+li $v0, 4
+la $a0, prompt
+syscall
+
+# Read user input
+li $v0, 5
+syscall
+move $t0, $v0
+
+
+# For loop to compute factorial
+# use $t1 to store answer
+
+
+#Display message
+li $v0, 4
+la $a0, output
+syscall
+
+# Display factorial output
+li $v0, 1
+move $a0, $t1
+syscall
+
+
+# Exit program
+li $v0, 10
+syscall
