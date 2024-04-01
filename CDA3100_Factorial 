@@ -1,0 +1,39 @@
+.data 
+prompt: .asciiz "What factorial would you like to calculate? " 
+
+.text
+.globl main 
+main:
+li $v0, 4                   # Syscall for print string
+la $a0, prompt              # Load address of prompt into $a0
+syscall                     # Print the prompt
+
+# Read integer from user
+li $v0, 5                   # Syscall for read integer
+syscall                     # The input number is now in $v0
+move $t0, $v0               # Move input to $t0
+
+# Initialize product to 1 (for factorial calculation)
+li $t1, 1
+
+# Check for 0 factorial explicitly if necessary
+beq $t0, $zero, end_factorial # If input is 0, factorial is 1, skip the loop
+
+# Loop from $t0 down to 1
+factorial_loop:
+beq $t0, $zero, end_factorial  # End loop if $t0 is 0
+mul $t1, $t1, $t0               # Multiply product by $t0
+sub $t0, $t0, 1                # Decrement $t0, use sub instead of subi
+j factorial_loop                # Jump back to the start of the loop
+
+end_factorial:
+#$t1 contains the factorial of the input
+    
+li $v0, 1
+la $a0, ($t1)
+syscall
+
+
+#Exit program
+li $v0, 10                
+syscall                   
