@@ -20,6 +20,8 @@ li $v0, 5
 syscall
 move $t0, $v0
 
+#Initialize $t1 to 1
+li $t1, 1
 
 # For loop to compute factorial
 # use $t1 to store answer
