@@ -23,8 +23,8 @@ move $t0, $v0
 
 # For loop to compute factorial
 # use $t1 to store answer
-loop
-beq $t0, $zer0, end_loop
+loop:
+beq $t0, $zero, end_loop
 mul $t1, $t1, $t0
 subi $t0, $t0, 1
 j loop
