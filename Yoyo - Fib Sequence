@@ -1,6 +1,7 @@
 .data
 prompt_fib: .asciiz "Enter the number of Fibonacci terms to generate: "
 result_msg: .asciiz "Fibonacci Sequence: "
+space: .asciiz " "     #even if it doesn't run correctly atleeast be pretty
 newline: .asciiz "\n"
 
 .text
@@ -29,6 +30,8 @@ main:
     li $v0, 1
     move $a0, $t1
     syscall
+    li $v0, 4          #space
+    la $a0, space
     move $a0, $t2
     syscall
 
@@ -43,6 +46,10 @@ fib_loop:
     # Print next Fibonacci number
     li $v0, 1
     move $a0, $t4
+    syscall
+
+    li $v0, 4         #space
+    la $a0, space
     syscall
 
     j fib_loop        # Jump back to loop start
